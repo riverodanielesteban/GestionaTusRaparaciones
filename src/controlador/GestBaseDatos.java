@@ -15,7 +15,6 @@ public class GestBaseDatos {
 	
 	private static Statement statement;
 	private static ResultSet resultset;
-	public static String nameDB;
 
 	/**
 	 * Metodo de conexion a la base de datos
@@ -25,7 +24,7 @@ public class GestBaseDatos {
 		Connection conexion = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost/"+nameDB+"?&serverTimezone=UTC", "root", "");
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost/gestion?&serverTimezone=UTC", "root", "");
 		} catch (ClassNotFoundException e1) {
 			Alertas.msjAlerta(e1.getMessage(), "Error Java - Mysql");
 		} catch (SQLException e) {

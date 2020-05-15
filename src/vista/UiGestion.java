@@ -5,23 +5,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import java.awt.Color;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class UiGestion extends JFrame {
 
@@ -29,14 +26,19 @@ public class UiGestion extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static JTextField id_orden,articulo,marca,modelo,nombre,direccion,telefono,email,fallas,fecha_ingreso,costo;
-	private static JComboBox<String> estado;
-
+	private static JTextField id_orden,articulo,marca,modelo,nombre,direccion,telefono,email,fallas,fecha_ingreso,estado;
+	private JTextField resultado_test;
+	private JTextField costo;
+	
+	/**
+	 * JFrame de gestion de orden de reparacion
+	 * @throws SQLException
+	 */
 	public UiGestion() throws SQLException {
 		setResizable(false);
 		setTitle("Lista");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(15, 15, 780, 500);
+		setBounds(15, 15, 670, 500);
 		getContentPane().setLayout(null);
 		
 		/*
@@ -60,7 +62,9 @@ public class UiGestion extends JFrame {
 				try {
 					controlador.GestListas.llenarCampos(ordenes.getSelectedValue().toString());
 					ordenes.setEnabled(false);
+					
 				} catch (Exception e) {
+					System.out.println("ordenes vacias");
 					e.printStackTrace();
 				}
 			}
@@ -80,55 +84,49 @@ public class UiGestion extends JFrame {
 		getContentPane().add(panelDatos);
 		panelDatos.setLayout(null);
 		
-		JLabel label = new JLabel("ID Orden");
-		label.setBounds(12, 25, 120, 20);
-		panelDatos.add(label);
+		JLabel ldlorden = new JLabel("ID Orden");
+		ldlorden.setBounds(12, 25, 120, 20);
+		panelDatos.add(ldlorden);
 		
-		JLabel label_1 = new JLabel("Articulo");
-		label_1.setBounds(12, 67, 120, 20);
-		panelDatos.add(label_1);
+		JLabel lblart = new JLabel("Articulo");
+		lblart.setBounds(12, 67, 120, 20);
+		panelDatos.add(lblart);
 		
-		JLabel label_2 = new JLabel("Marca");
-		label_2.setBounds(12, 97, 120, 20);
-		panelDatos.add(label_2);
+		JLabel lblmarca = new JLabel("Marca");
+		lblmarca.setBounds(12, 97, 120, 20);
+		panelDatos.add(lblmarca);
 		
-		JLabel label_3 = new JLabel("Modelo");
-		label_3.setBounds(12, 127, 120, 20);
-		panelDatos.add(label_3);
+		JLabel lblmodelo = new JLabel("Modelo");
+		lblmodelo.setBounds(12, 127, 120, 20);
+		panelDatos.add(lblmodelo);
 		
-		JLabel label_4 = new JLabel("Nombre");
-		label_4.setBounds(12, 175, 120, 20);
-		panelDatos.add(label_4);
+		JLabel lblnombre = new JLabel("Nombre");
+		lblnombre.setBounds(12, 175, 120, 20);
+		panelDatos.add(lblnombre);
 		
-		JLabel label_5 = new JLabel("Direccion");
-		label_5.setBounds(12, 205, 120, 20);
-		panelDatos.add(label_5);
+		JLabel lbldireccion = new JLabel("Direccion");
+		lbldireccion.setBounds(12, 205, 120, 20);
+		panelDatos.add(lbldireccion);
 		
-		JLabel label_6 = new JLabel("Telefono");
-		label_6.setBounds(12, 235, 120, 20);
-		panelDatos.add(label_6);
+		JLabel lbltelefono = new JLabel("Telefono");
+		lbltelefono.setBounds(12, 235, 120, 20);
+		panelDatos.add(lbltelefono);
 		
-		JLabel label_7 = new JLabel("Correo electronico");
-		label_7.setBounds(12, 266, 120, 20);
-		panelDatos.add(label_7);
+		JLabel lblmail = new JLabel("Correo electronico");
+		lblmail.setBounds(12, 266, 120, 20);
+		panelDatos.add(lblmail);
 		
-		JLabel label_8 = new JLabel("Fallas");
-		label_8.setBounds(12, 297, 120, 20);
-		panelDatos.add(label_8);
+		JLabel lblestado = new JLabel("Estado");
+		lblestado.setBounds(12, 297, 120, 20);
+		panelDatos.add(lblestado);
 		
-		JLabel label_9 = new JLabel("Estado");
-		label_9.setBounds(12, 328, 120, 20);
-		panelDatos.add(label_9);
+		JLabel lblfallas = new JLabel("Fallas");
+		lblfallas.setBounds(12, 328, 120, 20);
+		panelDatos.add(lblfallas);
 		
-		JLabel label_10 = new JLabel("Fecha de ingreso");
-		label_10.setBounds(12, 359, 120, 20);
-		panelDatos.add(label_10);
-		
-		estado = new JComboBox<String>();
-		estado.setEnabled(false);
-		estado.setEditable(true);
-		estado.setBounds(149, 328, 120, 20);
-		panelDatos.add(estado);
+		JLabel lblfechaingreso = new JLabel("Fecha de ingreso");
+		lblfechaingreso.setBounds(12, 359, 120, 20);
+		panelDatos.add(lblfechaingreso);
 		
 		id_orden = new JTextField();
 		id_orden.setEditable(false);
@@ -172,7 +170,7 @@ public class UiGestion extends JFrame {
 		
 		fallas = new JTextField();
 		fallas.setEditable(false);
-		fallas.setBounds(149, 297, 120, 20);
+		fallas.setBounds(149, 328, 120, 20);
 		panelDatos.add(fallas);
 		
 		fecha_ingreso = new JTextField();
@@ -180,23 +178,19 @@ public class UiGestion extends JFrame {
 		fecha_ingreso.setBounds(149, 359, 120, 20);
 		panelDatos.add(fecha_ingreso);
 		
-		JButton button = new JButton("Ver otra orden");
-		button.addActionListener(new ActionListener() {
+		estado = new JTextField();
+		estado.setEditable(false);
+		estado.setBounds(149, 297, 120, 20);
+		panelDatos.add(estado);
+		
+		JButton verOtraOrden = new JButton("Ver otra orden");
+		verOtraOrden.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ordenes.setEnabled(true);
 			}
 		});
-		button.setBounds(149, 399, 120, 23);
-		panelDatos.add(button);
-		
-		JButton button_1 = new JButton("Gestionar orden");
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		button_1.setBounds(10, 399, 132, 23);
-		panelDatos.add(button_1);
+		verOtraOrden.setBounds(149, 399, 120, 23);
+		panelDatos.add(verOtraOrden);
 		
 		/*
 		 * Panel de gestion de orden seleccionada
@@ -205,36 +199,58 @@ public class UiGestion extends JFrame {
 		JPanel panelGestion = new JPanel();
 		Border bordegestion = new TitledBorder(new EtchedBorder(), "Gestion de orden");
 		panelGestion.setBorder(bordegestion);
-		panelGestion.setBounds(470, 11, 290, 449);
+		panelGestion.setBounds(470, 11, 176, 283);
 		getContentPane().add(panelGestion);
 		panelGestion.setLayout(null);
 		
-		JLabel label_11 = new JLabel("Diagnostico");
-		label_11.setBounds(10, 26, 120, 20);
-		panelGestion.add(label_11);
+		JLabel lblresultadotest = new JLabel("Resulado de testeo");
+		lblresultadotest.setBounds(10, 30, 150, 20);
+		panelGestion.add(lblresultadotest);
 		
-		JTextPane diagnostico = new JTextPane();
-		diagnostico.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.LIGHT_GRAY, null));
-		diagnostico.setBounds(145, 26, 120, 80);
-		panelGestion.add(diagnostico);
+		resultado_test = new JTextField();
+		resultado_test.setBounds(10, 48, 150, 20);
+		panelGestion.add(resultado_test);
+		resultado_test.setColumns(10);
 		
-		JLabel label_12 = new JLabel("Requiere repuestos");
-		label_12.setBounds(10, 116, 120, 20);
-		panelGestion.add(label_12);
+		JLabel lbla = new JLabel("Requiere repuestos ?");
+		lbla.setBounds(10, 90, 150, 20);
+		panelGestion.add(lbla);
 		
 		JComboBox<String> repuestos = new JComboBox<String>();
-		repuestos.setModel(new DefaultComboBoxModel<String>(new String[] {"si", "no"}));
-		repuestos.setBounds(145, 116, 120, 20);
+		repuestos.setMaximumRowCount(3);
+		repuestos.setModel(new DefaultComboBoxModel<String>(new String[] {"no", "si"}));
+		repuestos.setSelectedIndex(0);
+		repuestos.setBounds(10, 107, 150, 22);
 		panelGestion.add(repuestos);
 		
-		JLabel label_13 = new JLabel("Costo");
-		label_13.setBounds(10, 147, 120, 20);
-		panelGestion.add(label_13);
+		JLabel lblCostoFinal = new JLabel("Costo final");
+		lblCostoFinal.setBounds(10, 155, 150, 20);
+		panelGestion.add(lblCostoFinal);
 		
 		costo = new JTextField();
 		costo.setColumns(10);
-		costo.setBounds(145, 146, 120, 20);
+		costo.setBounds(10, 175, 150, 20);
 		panelGestion.add(costo);
+		
+		JButton tarifas = new JButton("Tarifas");
+		tarifas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				//TODO crear ventana con listado de tarifas
+			}
+		});
+		tarifas.setBounds(10, 196, 150, 23);
+		panelGestion.add(tarifas);
+		
+		JButton presupuestar = new JButton("Presupuestar");
+		presupuestar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				//TODO agrega datos de revision de equipo y presupuesto
+			}
+		});
+		presupuestar.setBounds(10, 245, 150, 23);
+		panelGestion.add(presupuestar);
 	}
 	
 	public static void setIdorden(String idorden) {
@@ -278,6 +294,6 @@ public class UiGestion extends JFrame {
 	}
 	
 	public static void setEstado(String estado) {
-		UiGestion.estado.setSelectedItem(estado);
+		UiGestion.estado.setText(estado);
 	}
 }
